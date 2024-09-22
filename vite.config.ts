@@ -11,7 +11,7 @@ import topLevelAwait from 'vite-plugin-top-level-await';
 // --------------------------------- deploy on github action
 // https://github.com/ErickKS/vite-deploy
 // https://github.com/sitek94/vite-deploy-demo
-const repo = 'threejs_journey_r3f'
+const repo = 'zarking'
 
 export default defineConfig({
 	base: `/${repo}/`,
