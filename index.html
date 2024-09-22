@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="./favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<link href="./_app/immutable/assets/0.DVBKPqiX.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/2.CdyePJVQ.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.DJ9gDlOW.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/entry.KZ4rICBx.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.Bmg8oFKD.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.BkDbjhbx.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/preload-helper.CmsKOCeN.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.kZpYxruU.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.Bc-tt86i.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/2.Bf8vatvZ.js">
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">        <canvas id="game" class="svelte-1n8dj77"></canvas>   
+			
+			<script>
+				{
+					__sveltekit_se2jlr = {
+						base: new URL(".", location).pathname.slice(0, -1),
+						assets: "/threejs_journey"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.DJ9gDlOW.js"),
+						import("./_app/immutable/entry/app.BkDbjhbx.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 2],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
