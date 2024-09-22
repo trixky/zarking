@@ -11,10 +11,10 @@ import topLevelAwait from 'vite-plugin-top-level-await';
 // --------------------------------- deploy on github action
 // https://github.com/ErickKS/vite-deploy
 // https://github.com/sitek94/vite-deploy-demo
-const repo = 'zarking'
+// const repo = 'zarking'
 
 export default defineConfig({
-	base: `/${repo}/`,
+	// base: `/${repo}/`,
 	plugins: [wasm(), topLevelAwait(), sveltekit()],
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
