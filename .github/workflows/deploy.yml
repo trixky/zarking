@@ -1,51 +1,80 @@
-name: Deploy
+# https://gist.github.com/CarlosGDCJ/747032bea4f8506faeca1cffc926abaf
+# https://github.com/MapReduceMages/turing_machine/blob/main/.github/workflows/deploy.yml
+# https://www.okupter.com/blog/deploy-sveltekit-website-to-github-pages
+# https://github.com/MapReduceMages/turing_machine/blob/main/svelte.config.js
+
+# Workflow to build and deploy a SvelteKit website to GitHub Pages
+name: Deploy static SvelteKit content to Pages
 
 on:
+  # Runs on pushes targeting the default branch
   push:
-    branches:
-      - main
+    branches: ['main']
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
 
 jobs:
-  build:
-    name: Build
+  build-site:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v1
+      - name: Install Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 21
+          cache: npm
 
       - name: Install dependencies
-        uses: bahmutov/npm-install@v1
+        run: npm i
 
-      - name: Build project
-        run: npm run build
+      - name: Build
+        env:
+          BASE_PATH: "/${{ github.event.repository.name }}"
+        run: |
+          npm run build
 
-      - name: Upload production-ready build files
+      - name: Archive build
         uses: actions/upload-artifact@v4
         with:
-          name: production-files
+          # this should match the `pages` option in your adapter-static options
+          path: "build/"
+
+      - name: Upload Artifacts
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # this should match the `pages` option in your adapter-static options
           path: "build/"
 
   deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    needs: build-site
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: production-files
-          path: "build/"
-
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: "build/"
+        id: deployment
+        uses: actions/deploy-pages@v4
