@@ -31,7 +31,7 @@ export class ZarkingGame extends Game {
         const RAPIER = await getRapier();
 
         // sleep for 1 second
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 3000));
 
         // Use the RAPIER module here.
         const physicalWorld = new RAPIER.World(Game._gravity);

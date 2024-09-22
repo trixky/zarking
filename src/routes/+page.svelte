@@ -11,6 +11,8 @@
 	async function startGame() {
         game = new ZarkingGame(gameCanvas as HTMLCanvasElement);
 		await game.init();
+		// sleep 1 second
+		await new Promise((resolve) => setTimeout(resolve, 3000));
 		game.start();
 	}
 
