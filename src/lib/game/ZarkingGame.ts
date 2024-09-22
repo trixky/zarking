@@ -30,6 +30,9 @@ export class ZarkingGame extends Game {
     private async _initPhysicalWorld(): Promise<void> {
         const RAPIER = await getRapier();
 
+        // sleep for 1 second
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
         // Use the RAPIER module here.
         const physicalWorld = new RAPIER.World(Game._gravity);
         physicalWorld.timestep = 1 / 60;
@@ -96,7 +99,7 @@ export class ZarkingGame extends Game {
     }
 
     public destroy(): void {
-        super.init();
+        super.destroy();
 
         this._player.destroy();
         this._floor.destroy();
