@@ -3,7 +3,7 @@ import { Floor } from './actors/Floor';
 import { Game } from './generic/Game';
 import { AmbiantLight } from './actors/AmbiantLight';
 import { DirectionalLight } from './actors/DirectionalLight';
-import { getRapier, type Physic, type RAPIER } from './rapier';
+import { getRapier, type Physic } from './rapier';
 import { BufferAttribute, BufferGeometry, LineBasicMaterial, LineSegments, Vector3 } from 'three';
 import { Car } from './actors/Car';
 

@@ -12,7 +12,7 @@ export interface Physic {
 
 export async function getRapier(): Promise<RAPIER> {
   // eslint-disable-next-line import/no-named-as-default-member
-  const rapier = import('@dimforge/rapier3d');
+  const rapier = await import('@dimforge/rapier3d');
 
   return rapier;
 }
