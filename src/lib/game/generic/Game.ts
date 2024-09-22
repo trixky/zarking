@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const MIN_PIXEL_RATIO = 2;
 const MAX_PIXEL_RATIO = 3;
@@ -10,11 +12,13 @@ export abstract class Game {
 
 
     // --------------------- static
+    protected static readonly _gravity = { x: 0.0, y: -9.81, z: 0.0 };
     // --------------------- private
     // --------------------- protected
     protected _scene: THREE.Scene;
     protected _renderer: THREE.WebGLRenderer;
     protected _camera: THREE.PerspectiveCamera;
+    protected _controls: OrbitControls;
     protected _clock: THREE.Clock;
 
     protected _initialized: boolean;
@@ -32,7 +36,14 @@ export abstract class Game {
         this._scene = new THREE.Scene();
         this._renderer = new THREE.WebGLRenderer({ canvas: this._canvas });
         this._renderer.shadowMap.enabled = true;
+        
         this._camera = new THREE.PerspectiveCamera(75, this._canvas.width / this._canvas.height, 0.1, 100);
+        this._controls = new OrbitControls(this._camera, this._canvas);
+        this._camera.position.z = 10;
+        this._camera.position.y = 3;
+
+
+
         this._clock = new THREE.Clock();
 
         this._initialized = false;
@@ -43,7 +54,6 @@ export abstract class Game {
         this._resize();
         window.addEventListener('resize', this._resize);
 
-        this._camera.position.z = 3;
         this._scene.add(this._camera);
 
         console.debug('New game created');
@@ -85,6 +95,7 @@ export abstract class Game {
         if (this._pauseNextFrame) return;
 
         const detla = this._clock.getDelta();
+        this._controls.update();
         this._loop(detla);
         this._exeucuteHandlers();
 
@@ -96,11 +107,23 @@ export abstract class Game {
     // Initialize the game
     // This method should be called only once
     // And before any other method
-    public init() {
+    public async init(hdrPath?: string) {
         if (this._isInitialized(false))
             throw new Error('Game is already initialized');
 
+        if (hdrPath) {
+            new RGBELoader()
+                .load(hdrPath, function (texture) {
+                    texture.mapping = THREE.EquirectangularReflectionMapping;
+
+                    scene.background = texture;
+                    scene.environment = texture;
+                });
+        }
+
         this._initialized = true;
+        const scene = this._scene;
+
 
         return console.debug('Game initialized');
     }

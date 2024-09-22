@@ -8,9 +8,9 @@
 
 	let game: ZarkingGame | null = null;
 
-	function startGame() {
+	async function startGame() {
         game = new ZarkingGame(gameCanvas as HTMLCanvasElement);
-		game.init();
+		await game.init();
 		game.start();
 	}
 

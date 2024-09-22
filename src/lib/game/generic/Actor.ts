@@ -1,4 +1,6 @@
+import type { World } from "@dimforge/rapier3d";
 import { Object3D } from "three";
+import type { Physic } from "../rapier";
 
 export abstract class Actor extends Object3D {
     // ------------------------------------------------------------- PROPERTIES
@@ -14,7 +16,7 @@ export abstract class Actor extends Object3D {
 
     // ============================================================= PUBLIC
     // Initialize the actor
-    public abstract init(): void;
+    public abstract init(physic?: Physic): void;
 
     // Update the actor
     public update(delta: number): void {
